@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while(true){
@@ -19,13 +20,23 @@ public class Main {
             if (inputText.equals("")){
                 continue;
             }
-
-            String[] numbers=inputText.split("\\s+");
+            inputText=inputText.replaceAll("\\++","+")
+                    .replaceAll("(---)+","-")
+                    .replaceAll("--","+")
+                    .replaceAll("(\\+-)|(-\\+)","-")
+            ;
+            String[] term=inputText.split("\\s+");
             int result=0;
-            for(int i=0;i<numbers.length;i++){
-                result+=Integer.parseInt(numbers[i]);
+            String operation="+";
+            for(int i=0;i<term.length;i++){
+                if (term[i].equals("+") || (term[i].equals("-"))){
+                    operation=term[i];
+                }
+                else{
+                    int number=Integer.parseInt(term[i]);
+                    result=result+(operation.equals("+")?number:-number);
+                }
             }
-
             System.out.println(result);
         }
     }
