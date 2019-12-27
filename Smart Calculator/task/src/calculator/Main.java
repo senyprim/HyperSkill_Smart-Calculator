@@ -20,24 +20,17 @@ public class Main {
             if (inputText.equals("")){
                 continue;
             }
-            inputText=inputText.replaceAll("\\++","+")
-                    .replaceAll("(---)+","-")
-                    .replaceAll("--","+")
-                    .replaceAll("(\\+-)|(-\\+)","-")
-            ;
-            String[] term=inputText.split("\\s+");
-            int result=0;
-            String operation="+";
-            for(int i=0;i<term.length;i++){
-                if (term[i].equals("+") || (term[i].equals("-"))){
-                    operation=term[i];
-                }
-                else{
-                    int number=Integer.parseInt(term[i]);
-                    result=result+(operation.equals("+")?number:-number);
-                }
+            if (inputText.startsWith("/")){
+                System.out.println("Unknown command");
+                continue;
             }
-            System.out.println(result);
+            Calculator calc=new Calculator(inputText);
+            if (!calc.isValid) {
+                System.out.println("Invalid expression");
+            }
+            else {
+                System.out.println(calc.calculate());
+            }
         }
     }
 }
